@@ -5,14 +5,14 @@ from time import time
 from uuid import uuid4
 from blockchain import *
 
-from flask import Flask, jsonify, request
+from flask import *
 
 app = Flask(__name__)
 
 
 @app.route('/')
 def hello_world():  # put application's code here
-    return 'Hello World!'
+    return render_template("index.html")
 
 
 node_identifier = str(uuid4()).replace('-', '')
