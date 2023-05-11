@@ -18,6 +18,10 @@ def index():
 def transaction():
     return render_template("transaction.html")
 
+@app.route('/nodes')
+def nodes():
+    return render_template("nodes.html")
+
 
 node_identifier = str(uuid4()).replace('-', '')
 
