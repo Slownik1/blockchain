@@ -11,8 +11,12 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def hello_world():  # put application's code here
+def index():
     return render_template("index.html")
+
+@app.route('/transaction')
+def transaction():
+    return render_template("transaction.html")
 
 
 node_identifier = str(uuid4()).replace('-', '')
@@ -45,16 +49,18 @@ def mine():
     return jsonify(response), 200
 
 
-@app.route('/transactions/new', methods=['POST'])
+@app.route('/transaction/new', methods=['POST'])
 def new_transaction():
-    values = request.get_json()
+    sender = request.form['sender']
+    recipient = request.form['recipient']
+    amount = request.form['amount']
     required = ['sender', 'recipient', 'amount']
-    if not all(k in values for k in required):
+    if (sender, recipient, amount) is None:
         return 'Missing values', 400
 
-    index = blockchain.new_transaction(values['sender'], values['recipient'], values['amount'])
+    index = blockchain.new_transaction(sender, recipient, amount)
 
-    response = {'message': 'Transaction will be added to Block {index}'}
+    response = {'message': 'Transaction will be added to Block'}
     return jsonify(response), 201
 
 
