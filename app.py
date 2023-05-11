@@ -35,7 +35,7 @@ def mine():
     proof = blockchain.proof_of_work(last_proof)
 
     blockchain.new_transaction(
-        sender="0",
+        sender="Dawid",
         recipient=node_identifier,
         amount=1,
     )
@@ -58,9 +58,6 @@ def new_transaction():
     sender = request.form['sender']
     recipient = request.form['recipient']
     amount = request.form['amount']
-    required = ['sender', 'recipient', 'amount']
-    if (sender, recipient, amount) is None:
-        return 'Missing values', 400
 
     index = blockchain.new_transaction(sender, recipient, amount)
 
@@ -78,9 +75,8 @@ def full_chain():
 
 @app.route('/nodes/register', methods=['POST'])
 def register_nodes():
-    values = request.get_json()
+    nodes = request.form['adress']
 
-    nodes = values.get('nodes')
     if nodes is None:
         return "Error: Please supply a valid list of nodes", 400
 
