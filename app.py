@@ -59,6 +59,13 @@ def new_transaction():
     recipient = request.form['recipient']
     amount = request.form['amount']
 
+    if sender is None:
+        return jsonify('Please input sender data'), 404
+    if recipient is None:
+        return jsonify('Please input recipient data'), 404
+    if amount is None:
+        return jsonify('Please input amount data'), 404
+
     index = blockchain.new_transaction(sender, recipient, amount)
 
     response = {'message': 'Transaction will be added to Block'}
